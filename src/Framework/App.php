@@ -19,11 +19,11 @@ class App
     public function __construct(array $modules = [], array $dependencies = [])
     {
         $this->router = new Router();
-        if(array_key_exists('renderer', $dependencies)){
-          $dependencies['renderer']->addGlobal('router', $this->router);
+        if (array_key_exists('renderer', $dependencies)) {
+            $dependencies['renderer']->addGlobal('router', $this->router);
         }
         foreach ($modules as $module) {
-          $this->modules[] = new $module($this->router, $dependencies['renderer']);
+            $this->modules[] = new $module($this->router, $dependencies['renderer']);
         }
     }
 
@@ -36,25 +36,21 @@ class App
                                     ->withHeader('Location', substr($uri, 0, -1));
         }
         $route = $this->router->match($request);
-        if(is_null($route)){
-          return new Response(404, [], '<h1>Erreur 404</h1>');
+        if (is_null($route)) {
+            return new Response(404, [], '<h1>Erreur 404</h1>');
         }
         $params = $route->getParams();
         $request = array_reduce(array_keys($params), function ($request, $key) use ($params) {
-          return $request->withAttribute($key, $params[$key]);
+            return $request->withAttribute($key, $params[$key]);
         }, $request);
 
         $response = call_user_func_array($route->getCallback(), [$request]);
-        if(is_string($response)){
-          return new Response(200, [], $response);
-        }
-        elseif ($response instanceof ResponseInterface) {
-          return $response;
-
-        }
-        else{
-          throw new \Exception("The response is not a string or an instanceof ResponseInterface", 1);
-
+        if (is_string($response)) {
+            return new Response(200, [], $response);
+        } elseif ($response instanceof ResponseInterface) {
+            return $response;
+        } else {
+            throw new \Exception("The response is not a string or an instanceof ResponseInterface", 1);
         }
     }
 }
