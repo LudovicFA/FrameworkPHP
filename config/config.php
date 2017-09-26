@@ -7,6 +7,10 @@ use \Framework\Router\RouterTwigExtension;
 
 
 return [
+  'database.host' => 'localhost',
+  'database.user' => 'root',
+  'database.password' => '',
+  'database.name' => 'monsupersite',
   'view.path' => dirname(__DIR__).'/views',
   'twig.extensions' => [
     \DI\get(RouterTwigExtension::class)
