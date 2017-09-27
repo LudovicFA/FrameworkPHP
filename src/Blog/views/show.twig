@@ -1,6 +1,8 @@
 {% extends 'layout.twig' %}
-{% block title %}{{ slug }}
-{% endblock %}
+{% block title post.name %}
+
 {% block body %}
-  Bienvenue sur le slug {{ slug }}
+<h1>{{ post.name }}</h1>
+
+  {{ post.content | nl2br }}
 {% endblock %}
