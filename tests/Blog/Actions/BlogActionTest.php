@@ -11,6 +11,7 @@ use App\Blog\Table\PostTable;
 use Framework\Router;
 use Framework\Renderer\RendererInterface;
 use Prophecy;
+use App\Blog\Entity\Post;
 
 /**
  *
@@ -33,9 +34,9 @@ class BlogActionTest extends TestCase
     $this->action = new BlogAction($this->renderer->reveal(),  $this->router->reveal(), $this->postTable->reveal());
   }
 
-  public function makePost(int $id, string $slug): \stdClass
+  public function makePost(int $id, string $slug): Post
   {
-    $post = new \stdClass();
+    $post = new Post();
     $post->id = $id;
     $post->slug = $slug;
     return $post;

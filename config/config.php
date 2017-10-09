@@ -4,7 +4,9 @@ use \Framework\Renderer\RendererInterface;
 use \Framework\Renderer\TwigRenderer;
 use \Framework\Renderer\TwigRendererFactory;
 use \Framework\Router\RouterTwigExtension;
-
+use \Framework\Twig\{
+  PagerFantaExtension,TextExtension, TimeExtension
+};
 
 return [
   'database.host' => 'localhost',
@@ -13,7 +15,10 @@ return [
   'database.name' => 'monsupersite',
   'view.path' => dirname(__DIR__).'/views',
   'twig.extensions' => [
-    \DI\get(RouterTwigExtension::class)
+    \DI\get(RouterTwigExtension::class),
+    \DI\get(PagerFantaExtension::class),
+    \DI\get(TextExtension::class),
+    \DI\get(TimeExtension::class)
   ],
   RendererInterface::class => \DI\factory(TwigRendererFactory::class),
   \Framework\Router::class => \DI\object(),
