@@ -33,11 +33,11 @@ class PostTable
                   ->setCurrentPage($currentPage);
     }
 
-    public function find(int $id): Post
+    public function find(int $id): ?Post
     {
         $query = $this->pdo->prepare("SELECT * FROM posts WHERE id = ?");
         $query->execute([$id]);
         $query->setFetchMode(\PDO::FETCH_CLASS, Post::class);
-        return $query->fetch();
+        return $query->fetch() ?: null;
     }
 }
